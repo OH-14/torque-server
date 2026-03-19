@@ -1,7 +1,14 @@
 
+
 #torque-server
 
 ##A Spring Boot backend application designed to manage sports tournaments, developed in Java 21, the project focuses on automatizing complex logic and export in JSON format.
+
+<<<<<<< HEAD
+# torque-server
+A Spring Boot backend application designed to manage sports tournaments, developed in Java 21, the project focuses on automatizing complex logic and export in JSON format.
+
+
 
 ##Description
 This project focuses on automating the core tasks of a tournament organizer. It handles complex business logic to provide:
@@ -25,6 +32,11 @@ Java Time API: Precise handling of Duration and LocalTime for match scheduling.
 
 Java Collections & Streams: Advanced data manipulation using Lambdas and Stream API.
 
+<<<<<<< HEAD
+=======
+JUnit 5 & AssertJ: Testing framework using fluent assertions for highly readable and maintainable unit tests.
+
+>>>>>>> 207385c68e5a7c6a884d4bc0006c4fdd477e233e
 ##License & Trademark
 This project is licensed under the Apache License 2.0.
 
@@ -45,4 +57,9 @@ Email Notifications: Automatic alerts for teams when their next match is schedul
 
 Export to PDF and excel: Generate printable tournament summaries and bracket sheets.
 
+<<<<<<< HEAD
 Other functionalities...
+=======
+Other functionalities...
+>>>>>>> c3b31ee (initial project structure with Apache license 2.0 and README)
+>>>>>>> 207385c68e5a7c6a884d4bc0006c4fdd477e233e
