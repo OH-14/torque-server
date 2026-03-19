@@ -2,12 +2,15 @@ package com.torque.app.server.model;
 import lombok.Data; 
 import lombok.NonNull;
 import lombok.AllArgsConstructor;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class Match {
+public class GroupsCat {
     @NonNull
-    private Player one;
+    //name of the category
+    private String name;
     @NonNull
-    private Player two;
+    private List<Group> groups;
+    
 }

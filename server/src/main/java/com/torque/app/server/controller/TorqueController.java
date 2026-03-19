@@ -28,7 +28,7 @@ public class TorqueController {
     //returns another string
        return torqueService.proccessData(param);
    }
-   //example of the test01 in http://localhost:8080/test01?param=HolaMundo param= "HolaMundo"
+   //example of the path in http://localhost:port/path?param=HolaMundo param= "HolaMundo"
    
 
 }
