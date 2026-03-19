@@ -1,13 +1,14 @@
 package com.torque.app.server.model;
-import lombok.Data; 
-import lombok.NonNull;
+
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
-public class Match {
+public class Lapse {
     @NonNull
-    private Player one;
+    private Time start;
     @NonNull
-    private Player two;
+    private Time end;
 }

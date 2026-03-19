@@ -3,11 +3,12 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
-public class Match {
+public class Group {
     @NonNull
-    private Player one;
-    @NonNull
-    private Player two;
+    private List<Player> players;
+
 }

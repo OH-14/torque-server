@@ -2,12 +2,13 @@ package com.torque.app.server.model;
 import lombok.Data; 
 import lombok.NonNull;
 import lombok.AllArgsConstructor;
-
 @Data
 @AllArgsConstructor
-public class Match {
+public class ScheduledMatch {
     @NonNull
-    private Player one;
+    private Match encounter;
     @NonNull
-    private Player two;
+    private Time Starthour;
+    @NonNull
+    private Time ExpectedDuration;
 }
