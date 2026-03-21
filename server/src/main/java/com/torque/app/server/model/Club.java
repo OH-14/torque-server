@@ -7,7 +7,7 @@ import lombok.NonNull;
 public class Club {
     @NonNull
     private String name;
-
+//
     public Club(String name){
         this.name = name.trim().toUpperCase();
     }
