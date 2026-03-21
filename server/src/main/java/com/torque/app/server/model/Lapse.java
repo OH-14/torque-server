@@ -8,7 +8,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class Lapse {
     @NonNull
-    private Time start;
+    private final Time start;
     @NonNull
-    private Time end;
+    private final Time end;
 }

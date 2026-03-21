@@ -1,18 +1,23 @@
 package com.torque.app.server.model;
+
+import java.util.Map;
+
 import com.torque.app.server.util.Day;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
+
 @Data
 @AllArgsConstructor
-public class ScheduledMatch {
+public class ScheduleParams {
     @NonNull
-    private Match encounter;
+    private final Day startDay;
+    
+   
     @NonNull
-    private Time Starthour;
-    @NonNull
-    private Time ExpectedDuration;
-    @NonNull
-    private Day startDay;
+    //key: court/club , value: working
+    private Map<Club, WorkingLapse> tournamentTimes;
+
+
 }

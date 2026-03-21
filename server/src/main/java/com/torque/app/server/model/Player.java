@@ -13,8 +13,17 @@ import com.torque.app.server.exceptions.*;
 public class Player {
     @NonNull
     private String name;
+    
     private Time lastMatchWas;
+    
+    //unavailable lapses
+    //2D matrix because users may have different unavailable time lapses
+    //in different days from the startday of the tournament
+    private List<List<Lapse>> unavailableLapsesMatrix;
+    
+    
 
+    //more methods:
     public boolean hasLastMatch(){
         return !(lastMatchWas==null);
     }
@@ -25,10 +34,6 @@ public class Player {
     return lastMatchWas;
    }
 
-    //unavailable lapses
-    //2D matrix because users may have different unavailable time lapses
-    //in different days from the startday of the tournament
-   private List<List<Lapse>> unavailableLapsesMatrix;
 
    public List<List<Lapse>> getUnavailableLapsesMatrix(){
     if(unavailableLapsesMatrix==null) 
