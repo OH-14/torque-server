@@ -10,9 +10,5 @@ public class ScheduledMatch {
     @NonNull
     private Match encounter;
     @NonNull
-    private Time Starthour;
-    @NonNull
-    private Time ExpectedDuration;
-    @NonNull
-    private Day startDay;
+    private Lapse timeLapse;
 }

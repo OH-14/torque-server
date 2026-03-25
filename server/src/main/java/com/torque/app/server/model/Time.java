@@ -37,9 +37,27 @@ public class Time {
     }
 
     private void validate(int hours, int minutes){
-         if(hours>24||(hours==24&&minutes>0)) {
-            throw new InvalidTimeException("Duration is greater than a day");
+         if(hours>23) {
+            throw new InvalidTimeException("Duration is a day or greater");
         }
         
+    }
+
+
+    //generic functions
+    private static int hoursPassed(Time start, Time duration){
+        return start.getHour()+duration.getHour()+ (start.getMinutes()+duration.getMinutes())/60;
+    }
+
+    private static int minutesSum(Time start, Time duration){
+        return start.getMinutes()+duration.getMinutes();
+    }
+
+    public static Time findEndHour(Time start, Time duration){
+        return new Time(hoursPassed(start, duration)%24,minutesSum(start, duration)%60);
+    }
+
+    public static int daysPassed(Time start, Time duration){
+        return hoursPassed(start, duration)/24;
     }
 }

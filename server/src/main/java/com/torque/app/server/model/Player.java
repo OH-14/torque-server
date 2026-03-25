@@ -17,11 +17,9 @@ public class Player {
     private Time lastMatchWas;
     
     //unavailable lapses
-    //2D matrix because users may have different unavailable time lapses
-    //in different days from the startday of the tournament
-    private List<List<Lapse>> unavailableLapsesMatrix;
+    private List<Lapse> unavailableLapses;
     
-    
+    private Club club;
 
     //more methods:
     public boolean hasLastMatch(){
@@ -35,13 +33,17 @@ public class Player {
    }
 
 
-   public List<List<Lapse>> getUnavailableLapsesMatrix(){
-    if(unavailableLapsesMatrix==null) 
+   public List<Lapse> getUnavailableLapses(){
+    if(unavailableLapses==null) 
         throw new InvalidPlayerGetException("Player has not unavailable spaces, Suggestion: use hasUnavailableSpaces() or use try-catch to prevent");
-    return unavailableLapsesMatrix;
+    return unavailableLapses;
    }
 
    public boolean hasUnavailableSpaces(){
-    return unavailableLapsesMatrix!=null;
+    return unavailableLapses!=null;
    }
+
+   
+
+
 }
