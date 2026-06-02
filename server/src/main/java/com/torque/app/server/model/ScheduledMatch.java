@@ -1,5 +1,4 @@
 package com.torque.app.server.model;
-import com.torque.app.server.util.Day;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,4 +10,5 @@ public class ScheduledMatch {
     private Match encounter;
     @NonNull
     private Lapse timeLapse;
+    
 }

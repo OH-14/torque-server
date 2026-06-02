@@ -15,13 +15,20 @@ public class Lapse {
     private final Time duration;
     @NonNull
     private final Day startDay;
-
+    //what happens if the tournament last several weeks
+    private final int week;
     public Time getEndHour(){
         return Time.findEndHour(start, duration);
     }
 
     public Day getEndDay(){
         return startDay.plus(Time.daysPassed(start, duration));
+    }
+
+    public int getEndWeek(){
+        //as duraion
+        if (startDay==Day.SUN&&getEndDay()==Day.MON) return week+1;
+        return week;
     }
 
 

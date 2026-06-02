@@ -7,6 +7,6 @@ import lombok.Data;
 //court were a match can be played
 @Data
 public class WorkingLapse {
-    private String court;
+    private int court;
     private Lapse timeLapse;
 }

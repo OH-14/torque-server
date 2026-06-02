@@ -1,6 +1,6 @@
 package com.torque.app.server.constants;
 
-public enum GroupsSortingSystem {
+public enum GroupsSortingType {
     SERPENTINE,
     RANDOM
 }

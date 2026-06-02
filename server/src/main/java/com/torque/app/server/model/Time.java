@@ -38,7 +38,11 @@ public class Time {
 
     private void validate(int hours, int minutes){
          if(hours>23) {
-            throw new InvalidTimeException("Duration is a day or greater");
+            throw new InvalidTimeException("Hours are greater than 23");
+        }
+
+        if(minutes>59){
+            throw new InvalidTimeException("Minutes are greater than 59");
         }
         
     }

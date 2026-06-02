@@ -19,9 +19,11 @@ public class Player {
     //unavailable lapses
     private List<Lapse> unavailableLapses;
     
-    private Club club;
+    private String club = "No Club";
 
     //more methods:
+    
+
     public boolean hasLastMatch(){
         return !(lastMatchWas==null);
     }
@@ -35,14 +37,19 @@ public class Player {
 
    public List<Lapse> getUnavailableLapses(){
     if(unavailableLapses==null) 
-        throw new InvalidPlayerGetException("Player has not unavailable spaces, Suggestion: use hasUnavailableSpaces() or use try-catch to prevent");
+        throw new InvalidPlayerGetException("Player has not unavailable spaces, Suggestion: use hasUnavailableLapses() or use try-catch to prevent");
     return unavailableLapses;
    }
 
-   public boolean hasUnavailableSpaces(){
+   public boolean hasUnavailableLapses(){
     return unavailableLapses!=null;
    }
 
+   public boolean hasClub(){
+    if (club==null) return false;
+    if(club.trim().equals("")) return false;
+    return !club.equals("No Club");
+   }
    
 
 

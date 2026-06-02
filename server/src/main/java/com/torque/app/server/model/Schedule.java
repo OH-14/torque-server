@@ -9,4 +9,6 @@ public class Schedule {
     //court hour
     @NonNull
     private List<List<ScheduledMatch>> scheduleMatrix;
+
+    
 }
