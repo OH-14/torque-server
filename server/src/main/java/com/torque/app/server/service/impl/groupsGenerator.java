@@ -23,15 +23,19 @@ public class groupsGenerator implements CompetitionSystem {
     private List<Match> matches= new ArrayList<>();
 
     @NonNull
-    private GroupsSortingType sort;
+    private List<GroupsSortingType> sortings;
 
     @Override
     public void generateDraw(List<Category> categories){
-        categories.stream().forEach(category->{
+        //validate sortings length
+        if(sortings.size()!=categories.size()) throw new InvalidDrawsException("The number of sorting types provided are different than the number of categories");
+        
+        categories.forEach(category->{
             //add groups
-            draw.add(makeGroup(category));
+            int catIndex = categories.indexOf(category);
+            draw.add(makeGroup(category, catIndex));
             //add matches
-
+            listMatches();
         });
 
         
@@ -39,20 +43,34 @@ public class groupsGenerator implements CompetitionSystem {
 
     private void listMatches(){
         if(draw==null||draw.isEmpty()) throw new InvalidDrawsException("Can not generate matches from a null or empty draw");
-        
+        draw.forEach(category -> {
+            category.getGroups().forEach(group->{
+                int groupSize = group.getPlayers().size();
+                List<Player> players = group.getPlayers();
+                if(groupSize>1){
+                for(int player1 = 0; player1<groupSize-1;player1++){
+                    for(int player2 = player1+1;player2<groupSize;player2++){
+                        Player one = players.get(player1);
+                        Player two = players.get(player2);
+                        matches.add(new Match(one,two));
+                    }
+                }}
+            });
+        });
     }
     
-    private GroupsCat makeGroup(Category category){
+    private GroupsCat makeGroup(Category category, int catIndex){
         List<Group> groups = new ArrayList<>();
-        //This should never happen since sort is intended to be non-null
+        //This should never happen since sort is intended to be non-null  
+        GroupsSortingType sort = sortings.get(catIndex);
         if(sort==null){
-            throw new InvalidDrawsException("Sorting system was not specified");
+            throw new InvalidDrawsException("Sorting type is null");
         } else if(sort==GroupsSortingType.SERPENTINE){
             groups=serpentine(category.getPlayers(), category.getNumGroups());
         } else if (sort==GroupsSortingType.RANDOM){
             groups=random(category.getPlayers(), category.getNumGroups());
         } else {
-            throw new InvalidDrawsException("Unhandled Sorting system");
+            throw new InvalidDrawsException("Unhandled Sorting type: Unknown error");
         }
 
         GroupsCat groupsCat = new GroupsCat(category.getName(), groups);

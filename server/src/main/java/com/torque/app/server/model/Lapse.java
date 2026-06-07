@@ -17,6 +17,7 @@ public class Lapse {
     private final Day startDay;
     //what happens if the tournament last several weeks
     private final int week;
+    
     public Time getEndHour(){
         return Time.findEndHour(start, duration);
     }
@@ -26,7 +27,7 @@ public class Lapse {
     }
 
     public int getEndWeek(){
-        //as duraion
+        //as duration can only be less than one day
         if (startDay==Day.SUN&&getEndDay()==Day.MON) return week+1;
         return week;
     }
