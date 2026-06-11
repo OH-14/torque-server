@@ -3,7 +3,7 @@ A Spring Boot backend application designed to manage sports tournaments, develop
 
 
 
-##Description
+📌Description
 This project focuses on automating the core tasks of a tournament organizer. It handles complex business logic to provide:
 
 Automatic Scheduling: Intelligent match timing and sequencing.
@@ -12,7 +12,7 @@ Format Generation: Automated creation of group stages and tournament brackets, r
 
 Data Processing: A high-performance server that processes tournament data and exports results in JSON format.
 
-##Tech Stack
+💻Tech Stack
 Java 21 / Spring Boot 3: Core framework for robust backend development.
 
 Spring Web: REST API development and endpoint management.
@@ -27,7 +27,7 @@ Java Collections & Streams: Advanced data manipulation using Lambdas and Stream 
 
 JUnit 5 & AssertJ: Testing framework using fluent assertions for highly readable and maintainable unit tests.
 
-##License & Trademark
+🛡️License & Trademark
 This project is licensed under the Apache License 2.0.
 
 Important Usage Restrictions:
@@ -36,7 +36,7 @@ Non-Commercial Use: Although this code is open, it may not be used for monetary 
 
 Trademark Notice: The name "Torque App" and all original artwork/logos are the exclusive property of the author. The Apache license applies to the code logic only; branding and naming rights are strictly reserved.
 
-##Coming soon:
+ 🚀Coming soon:
 User Authentication and payment methods: Secure login for tournament organizers using Spring Security.
 
 Database Integration: Moving from in-memory processing to PostgreSQL for persistent data.

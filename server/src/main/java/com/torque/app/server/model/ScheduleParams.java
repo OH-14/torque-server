@@ -13,9 +13,9 @@ public class ScheduleParams {
     private final Day startDay;
        
     @NonNull
-    //key: court/club , value: working
     private List<WorkingLapse> tournamentTimes;
-
+    //resting time per category
+    
     public ScheduleParams(Day startDay, List<WorkingLapse> tournamentTimes){
         this.startDay=startDay;
         this.tournamentTimes=tournamentTimes;
