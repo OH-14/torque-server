@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-import org.springframework.web.service.registry.HttpServiceGroupConfigurer.Groups;
-
 import com.torque.app.server.constants.GroupsSortingType;
 import com.torque.app.server.exceptions.InvalidDrawsException;
 import com.torque.app.server.model.*;
@@ -29,8 +27,8 @@ public class groupsGenerator implements CompetitionSystem {
     public void generateDraw(List<Category> categories){
         //validate sortings length
         if(sortings.size()!=categories.size()) throw new InvalidDrawsException("The number of sorting types provided are different than the number of categories");
-        
-        categories.forEach(category->{
+        //Stream is used so the original categories are not modified
+        categories.stream().forEach(category->{
             //add groups
             int catIndex = categories.indexOf(category);
             draw.add(makeGroup(category, catIndex));
@@ -44,7 +42,8 @@ public class groupsGenerator implements CompetitionSystem {
     private void listMatches(){
         if(draw==null||draw.isEmpty()) throw new InvalidDrawsException("Can not generate matches from a null or empty draw");
         draw.forEach(category -> {
-            category.getGroups().forEach(group->{
+            //Stream is used so the originial draw is not modified
+            category.getGroups().stream().forEach(group->{
                 int groupSize = group.getPlayers().size();
                 List<Player> players = group.getPlayers();
                 if(groupSize>1){

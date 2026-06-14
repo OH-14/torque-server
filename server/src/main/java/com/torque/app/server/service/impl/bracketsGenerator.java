@@ -31,12 +31,11 @@ public class bracketsGenerator implements CompetitionSystem {
         //validate sortings length
         if(sortings.size()!=categories.size()) throw new InvalidDrawsException("The number of sorting types provided are different than the number of categories");
 
-        categories.forEach(category->{
+        categories.stream().forEach(category->{
 
             //add bracket
             int catIndex = categories.indexOf(category);
             draw.add(makeBracket(category, catIndex));
-            //list matches
 
         });
 
@@ -61,18 +60,43 @@ public class bracketsGenerator implements CompetitionSystem {
     }
 
     private List<List<Match>> serpentine(List<Player> players){
-        List<List<Match>> matches = new ArrayList<>();
+       
         int numberOfPlayers = players.size();
         int numberOfPositions = getNumberOfPositions(numberOfPlayers);
         int numberOfRounds = getNumberOfRounds(numberOfPositions);
         List<Player> playersWithBYE = addBYE(numberOfPlayers, numberOfPositions, players);
         check(numberOfPositions);
         List<Match> firstRound = getFirstRound(playersWithBYE, numberOfPositions, numberOfRounds);
-        matches.add(firstRound);
-        for(int i=0; i<numberOfRounds; i++){
-            
-        }
+        List<List<Match>> matches = addAllRounds(numberOfRounds, firstRound);
         return matches;
+    }
+
+    private List<List<Match>> addAllRounds(int numberOfRounds, List<Match> firstRound){
+        List<List<Match>> rounds = new ArrayList<>();
+        rounds.add(firstRound);
+
+        for(int i= 1; i<numberOfRounds; i++){
+            List<Match> lastRound = rounds.getLast();
+            List<Match> newRound = new ArrayList<>();
+            for(int e = 0;e<lastRound.size();e=e+2){
+                Player winnerOne = getWinner(lastRound.get(e));
+                Player winnerTwo = getWinner(lastRound.get(e+1));
+                Match match = new Match(winnerOne, winnerTwo);
+                newRound.add(match);
+                this.matches.add(match);
+            }
+            rounds.add(newRound);
+        }
+
+        return rounds;
+    }
+
+    private Player getWinner(Match match){
+        Player bye = new Player("BYE");
+        if (match==null||match.getOne()==null||match.getTwo()==null) throw new InvalidDrawsException("Can not get winner from a null match or nor a match containing a null player");
+        if(match.getOne().equals(bye)) return match.getTwo();
+        else if (match.getTwo().equals(bye)) return match.getOne();
+        else return new Player(match.getOne().getName()+"|"+match.getTwo().getName());
     }
 
     private void check(int numberOfPositions){
@@ -81,26 +105,39 @@ public class bracketsGenerator implements CompetitionSystem {
     }
 
     private List<Match> getFirstRound(List<Player> players,int numberOfPositions, int numberOfRounds){
-        List<Integer> orders = generateOrder(numberOfPositions, numberOfRounds);
-
-
-
-
-
-        return matches;
+       List<Match> firstRound = new ArrayList<>();
+        List<Integer> indexes = generateOrder(numberOfPositions, numberOfRounds);
+        indexes.replaceAll(n->n-1);
+       for(int i = 0; i<players.size();i=i+2){
+        Match match = new Match(players.get(indexes.get(i)), players.get(indexes.get(i+1))); 
+        firstRound.add(match);
+        this.matches.add(match);
+       }
+        return firstRound;
     }
 
-        private List<Integer> generateOrder(int numberOfPositions, int numberOfRounds){
-        List<Integer> orders = Arrays.asList(1, 2);
+
+
+    private List<Integer> generateOrder(int numberOfPositions, int numberOfRounds){
+         List<Integer> orders = new ArrayList<>(List.of(1, 2));
         
         boolean below = true;
         for(int i = 1; i<numberOfRounds;i++){
-            int ordersSize = orders.size();
-            int iterator = ordersSize;
-            for(int e= 0; e<ordersSize;e++){
-                if(below) orders.add(iterator+1,numberOfPositions+1-orders.get(iterator)); 
-                else orders.add(iterator-1, numberOfPositions+1-orders.get(iterator));
-                iterator++;
+           
+            int oS = orders.size();
+            int iterator = 1;
+            for(int e= 0; e<oS;e++){
+                
+                if(below){
+                  orders.add(iterator,oS*2+1-orders.get(iterator-1));
+                  iterator++;
+                }  
+                else{
+                   orders.add(iterator, oS*2+1-orders.get(iterator));
+                   iterator +=3;
+                } 
+                
+                below=!below;
             }
         }
 
