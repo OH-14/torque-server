@@ -16,6 +16,6 @@ public class scheduleGenerator implements ScheduleGeneration {
     private Schedule schedule;
 
     public void generateSchedule(List<Match> matches, ScheduleParams params){
-
+        
     }
 }
