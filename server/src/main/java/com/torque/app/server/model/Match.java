@@ -10,4 +10,6 @@ public class Match {
     private Player one;
     @NonNull
     private Player two;
+    @NonNull
+    private String category;
 }

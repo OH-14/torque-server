@@ -1,8 +1,6 @@
 package com.torque.app.server.service.impl;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,9 +47,9 @@ public class bracketsGenerator implements CompetitionSystem {
         if(sort==null){
             throw new InvalidDrawsException("Sorting type is null");
         } else if(sort==BracketSortingType.SERPENTINE){
-            return new Bracket(category.getName(), serpentine(category.getPlayers()));
+            return new Bracket(category.getName(), serpentine(category.getPlayers(), category.getName()));
         } else if (sort==BracketSortingType.RANDOM){
-            return new Bracket(category.getName(), random(category.getPlayers()));
+            return new Bracket(category.getName(), random(category.getPlayers(), category.getName()));
         } else {
             throw new InvalidDrawsException("Unhandled Sorting type: Unknown error");
         }
@@ -59,19 +57,19 @@ public class bracketsGenerator implements CompetitionSystem {
 
     }
 
-    private List<List<Match>> serpentine(List<Player> players){
+    private List<List<Match>> serpentine(List<Player> players, String category){
        
         int numberOfPlayers = players.size();
         int numberOfPositions = getNumberOfPositions(numberOfPlayers);
         int numberOfRounds = getNumberOfRounds(numberOfPositions);
         List<Player> playersWithBYE = addBYE(numberOfPlayers, numberOfPositions, players);
         check(numberOfPositions);
-        List<Match> firstRound = getFirstRound(playersWithBYE, numberOfPositions, numberOfRounds);
-        List<List<Match>> matches = addAllRounds(numberOfRounds, firstRound);
+        List<Match> firstRound = getFirstRound(playersWithBYE, numberOfPositions, numberOfRounds, category);
+        List<List<Match>> matches = addAllRounds(numberOfRounds, firstRound, category);
         return matches;
     }
 
-    private List<List<Match>> addAllRounds(int numberOfRounds, List<Match> firstRound){
+    private List<List<Match>> addAllRounds(int numberOfRounds, List<Match> firstRound, String category){
         List<List<Match>> rounds = new ArrayList<>();
         rounds.add(firstRound);
 
@@ -81,7 +79,7 @@ public class bracketsGenerator implements CompetitionSystem {
             for(int e = 0;e<lastRound.size();e=e+2){
                 Player winnerOne = getWinner(lastRound.get(e));
                 Player winnerTwo = getWinner(lastRound.get(e+1));
-                Match match = new Match(winnerOne, winnerTwo);
+                Match match = new Match(winnerOne, winnerTwo, category);
                 newRound.add(match);
                 this.matches.add(match);
             }
@@ -104,12 +102,12 @@ public class bracketsGenerator implements CompetitionSystem {
         if(Integer.highestOneBit(numberOfPositions)!=numberOfPositions) throw new InvalidDrawsException("The number of players is not in base 2");
     }
 
-    private List<Match> getFirstRound(List<Player> players,int numberOfPositions, int numberOfRounds){
+    private List<Match> getFirstRound(List<Player> players,int numberOfPositions, int numberOfRounds, String category){
        List<Match> firstRound = new ArrayList<>();
         List<Integer> indexes = generateOrder(numberOfPositions, numberOfRounds);
         indexes.replaceAll(n->n-1);
        for(int i = 0; i<players.size();i=i+2){
-        Match match = new Match(players.get(indexes.get(i)), players.get(indexes.get(i+1))); 
+        Match match = new Match(players.get(indexes.get(i)), players.get(indexes.get(i+1)), category); 
         firstRound.add(match);
         this.matches.add(match);
        }
@@ -164,9 +162,9 @@ public class bracketsGenerator implements CompetitionSystem {
     
 
 
-    private List<List<Match>> random(List<Player> players){
+    private List<List<Match>> random(List<Player> players, String category){
         Collections.shuffle(players);
-        return serpentine(players);
+        return serpentine(players, category);
     }
 
 

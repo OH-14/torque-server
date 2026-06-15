@@ -2,34 +2,38 @@ package com.torque.app.server.model;
 
 import java.util.List;
 
-import com.torque.app.server.util.Day;
-
 import lombok.Data;
 import lombok.NonNull;
 
 @Data
 public class ScheduleParams {
+         
     @NonNull
-    private final Day startDay;
-       
+    //court, working lapse
+    private List<List<WorkingLapse>> tournamentTimes;
+    //resting time duration per category
     @NonNull
-    private List<WorkingLapse> tournamentTimes;
-    //resting time per category
+    private List<Time> restingDurations;
+    //expected match durations per category
+    @NonNull
+    private List<Time> matchDurations;
+    public ScheduleParams(List<List<WorkingLapse>> tournamentTimes, List<Time> restingDurations, List<Time> matchDurations){
     
-    public ScheduleParams(Day startDay, List<WorkingLapse> tournamentTimes){
-        this.startDay=startDay;
+        this.restingDurations = restingDurations;
+        this.matchDurations = matchDurations;
         this.tournamentTimes=tournamentTimes;
-
         removeUnnecesary();
-        orderByHour();
+        orderByTime();
     }
 
     private void removeUnnecesary(){
+        //remove conflicts with static methods of lapses and unify conflicted or behind lapses
 
     }
 
-    private void orderByHour(){
-        
+    private void orderByTime(){
+        //order tournament time with static methods of lapses and streams
+
     }
 
 

@@ -9,6 +9,6 @@ public class ScheduledMatch {
     @NonNull
     private Match encounter;
     @NonNull
-    private Lapse timeLapse;
+    private WorkingLapse timeCourt;
     
 }

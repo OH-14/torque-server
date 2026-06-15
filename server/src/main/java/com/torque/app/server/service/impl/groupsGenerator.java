@@ -51,7 +51,7 @@ public class groupsGenerator implements CompetitionSystem {
                     for(int player2 = player1+1;player2<groupSize;player2++){
                         Player one = players.get(player1);
                         Player two = players.get(player2);
-                        matches.add(new Match(one,two));
+                        matches.add(new Match(one,two, category.getName()));
                     }
                 }}
             });
