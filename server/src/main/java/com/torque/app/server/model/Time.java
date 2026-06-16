@@ -64,4 +64,12 @@ public class Time {
     public static int daysPassed(Time start, Time duration){
         return hoursPassed(start, duration)/24;
     }
+
+    public static Time earlier(Time time1, Time time2){
+        if(time1.getHour()<time2.getHour()|| (time1.getHour()==time2.getHour()&&time1.getMinutes()<time2.getMinutes())){
+            return time1;
+        } else {
+            return time2;
+        }
+    }
 }

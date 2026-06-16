@@ -1,5 +1,6 @@
 package com.torque.app.server.model;
 
+import com.torque.app.server.exceptions.InvalidTimeException;
 import com.torque.app.server.util.Day;
 
 import lombok.AllArgsConstructor;
@@ -32,35 +33,73 @@ public class Lapse {
         return week;
     }
 
-    //one lap starts before or equal to the other and ends after the other started
-    public static boolean laspsesConflict(Lapse lapse1, Lapse lapse2){
-        boolean weekEqual = weekEqual(lapse1, lapse2);
-        boolean dayEqual = dayEqual(lapse1, lapse2);
-        boolean endWeekEqual = endWeekEqual(lapse1, lapse2);
-        boolean endDayEqual = endDayEqual(lapse1, lapse2);
-        //1 case: same week, same day
-        if(weekEqual&&dayEqual&&endWeekEqual&&endDayEqual){
-            
-        }
 
-        return false;
+
+    public static Lapse unifyLapses(Lapse lapse1, Lapse lapse2){
+        if(!laspsesConflict(lapse1, lapse2)) throw new InvalidTimeException("Can not unify lapses that do not conflict");
+        Time start = Time.earlier(lapse1.getStart(), lapse2.getStart());
+        return null;
     }
-
-    private static boolean weekEqual(Lapse lapse1,Lapse lapse2){
-        return lapse1.getWeek()==lapse2.getWeek();
-    }
-
-    private static boolean dayEqual(Lapse lapse1,Lapse lapse2){
-        return lapse1.getStartDay().equals(lapse2.getStartDay());
-    }
-
     
-    private static boolean endWeekEqual(Lapse lapse1,Lapse lapse2){
-        return lapse1.getEndWeek()==lapse2.getEndWeek();
+    
+
+
+
+
+
+
+
+
+
+    //a lap conficts if one lap starts before or equal to the other and ends after or when the other started
+    public static boolean laspsesConflict(Lapse lapse1, Lapse lapse2){
+        return ((startsBefore(lapse1, lapse2)&&endsAfter(lapse1, lapse2))||(startsBefore(lapse2, lapse1)&&endsAfter(lapse2, lapse1)));
     }
 
-    private static boolean endDayEqual(Lapse lapse1,Lapse lapse2){
-        return lapse1.getEndDay().equals(lapse2.getEndDay());
+
+
+
+
+
+
+    private static boolean startsBefore(Lapse lapse1, Lapse lapse2){
+        if(startDaysBefore(lapse1, lapse2)) return true;
+        return startDayEqual(lapse1, lapse2)&&equalOrBeforeStartHour(lapse1, lapse2);
+    }
+
+
+    private static boolean endsAfter(Lapse lapse1, Lapse lapse2){
+        if(endDaysAfterStart(lapse1, lapse2)) return true;
+        return endDayEqualToStartDay(lapse1, lapse2)&&endHourAfterOrEqualToStartHour(lapse1, lapse2);
+    }
+
+    private static boolean endHourAfterOrEqualToStartHour(Lapse lapse1, Lapse lapse2){
+        return lapse1.getEndHour().getHour()>lapse2.getStart().getHour()|| (lapse1.getEndHour().getHour()==lapse2.getStart().getHour()&&lapse1.getEndHour().getMinutes()>=lapse2.getStart().getMinutes());
+    }
+    private static boolean endDayEqualToStartDay(Lapse lapse1, Lapse lapse2){
+        return lapse1.getEndDay()==lapse2.getStartDay();
+    }
+
+    private static boolean endDaysAfterStart(Lapse lapse1, Lapse lapse2){
+                return lapse1.getEndWeek()>lapse2.getWeek()||(endWeekEqualToStartWeek(lapse1, lapse2)&&Day.dayIsAfter(lapse1.getEndDay(), lapse2.getStartDay()));
+    }
+    private static boolean endWeekEqualToStartWeek(Lapse lapse1, Lapse lapse2){
+        return lapse1.getEndWeek()==lapse2.getWeek();
+    }
+    private static boolean equalOrBeforeStartHour(Lapse lapse1, Lapse lapse2){
+        if(lapse1.getStart().getHour()<lapse2.getStart().getHour()) return true;
+        return lapse1.getStart().getHour()==lapse2.getStart().getHour()&&lapse1.getStart().getMinutes()<=lapse2.getStart().getMinutes();
+    }
+
+    private static boolean startDayEqual(Lapse lapse1, Lapse lapse2){
+        return lapse1.getStartDay()==lapse2.getStartDay();
+    }
+
+    private static boolean startDaysBefore(Lapse lapse1, Lapse lapse2){
+        return lapse1.getWeek()<lapse2.getWeek()||(startWeekEqual(lapse1, lapse2)&&Day.dayIsBefore(lapse1.getStartDay(), lapse2.getStartDay()));
+    }
+    private static boolean startWeekEqual(Lapse lapse1,Lapse lapse2){
+        return lapse1.getWeek()==lapse2.getWeek();
     }
 
 

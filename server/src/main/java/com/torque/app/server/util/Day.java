@@ -17,4 +17,11 @@ public enum Day {
         
     }
 
+    public static boolean dayIsBefore(Day day1, Day day2){
+        return day1.ordinal()<day2.ordinal();
+    }
+
+        public static boolean dayIsAfter(Day day1, Day day2){
+        return day1.ordinal()>day2.ordinal();
+    }
 }
