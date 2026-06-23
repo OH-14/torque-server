@@ -10,30 +10,21 @@ public class ScheduleParams {
          
     @NonNull
     //court, working lapse
-    private List<List<WorkingLapse>> tournamentTimes;
+    private List<List<Lapse>> workingLapses;
     //resting time duration per category
     @NonNull
     private List<Time> restingDurations;
     //expected match durations per category
     @NonNull
     private List<Time> matchDurations;
-    public ScheduleParams(List<List<WorkingLapse>> tournamentTimes, List<Time> restingDurations, List<Time> matchDurations){
+    public ScheduleParams(List<List<Lapse>> workingLapses, List<Time> restingDurations, List<Time> matchDurations){
     
         this.restingDurations = restingDurations;
         this.matchDurations = matchDurations;
-        this.tournamentTimes=tournamentTimes;
-        removeUnnecesary();
-        orderByTime();
-    }
 
-    private void removeUnnecesary(){
-        //remove conflicts with static methods of lapses and unify conflicted or behind lapses
-
-    }
-
-    private void orderByTime(){
-        //order tournament time with static methods of lapses and streams
-
+        //Remove unnecesary Lapses and order each list od lapses
+        this.workingLapses=workingLapses;
+        
     }
 
 
