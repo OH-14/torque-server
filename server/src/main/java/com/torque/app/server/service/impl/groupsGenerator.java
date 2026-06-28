@@ -3,6 +3,7 @@ package com.torque.app.server.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.stream.IntStream;
 
 import com.torque.app.server.constants.GroupsSortingType;
 import com.torque.app.server.exceptions.InvalidDrawsException;
@@ -41,9 +42,11 @@ public class groupsGenerator implements CompetitionSystem {
 
     private void listMatches(){
         if(draw==null||draw.isEmpty()) throw new InvalidDrawsException("Can not generate matches from a null or empty draw");
-        draw.forEach(category -> {
-            //Stream is used so the originial draw is not modified
-            category.getGroups().stream().forEach(group->{
+        draw.stream().forEach(category -> {
+            //Stream is used so the original draw is not modified
+            List<Group> groups = category.getGroups();
+            IntStream.range(0, groups.size()).forEach(i -> {
+                Group group = groups.get(i);
                 int groupSize = group.getPlayers().size();
                 List<Player> players = group.getPlayers();
                 if(groupSize>1){
@@ -51,17 +54,17 @@ public class groupsGenerator implements CompetitionSystem {
                     for(int player2 = player1+1;player2<groupSize;player2++){
                         Player one = players.get(player1);
                         Player two = players.get(player2);
-                        matches.add(new Match(one,two, category.getName()));
+                        matches.add(new Match(one,two, category.getName(), i+1));
                     }
-                }}
+                }} 
             });
         });
     }
     
     private GroupsCat makeGroup(Category category, int catIndex){
         List<Group> groups = new ArrayList<>();
-        //This should never happen since sort is intended to be non-null  
         GroupsSortingType sort = sortings.get(catIndex);
+        //This should never happen since sort is intended to be non-null  
         if(sort==null){
             throw new InvalidDrawsException("Sorting type is null");
         } else if(sort==GroupsSortingType.SERPENTINE){

@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.ArrayList;
 
 import com.torque.app.server.exceptions.InvalidConstructorException;
-import com.torque.app.server.exceptions.InvalidTimeException;
+import com.torque.app.server.exceptions.NotSpecifiedException;
 import com.torque.app.server.model.Lapse;
 
 public final class Order {
@@ -13,7 +13,7 @@ public final class Order {
 
     
     public static List<Lapse> orderAndSimplifyLapses(List<Lapse> lapses){
-        if(lapses==null||lapses.isEmpty()) throw new InvalidTimeException("Lapses list cannot be null or empty");
+        if(lapses==null||lapses.isEmpty()) throw new NotSpecifiedException("Lapses list cannot be null or empty");
         Comparator<Lapse> StartsEarlierComparator = Comparator
         .comparingInt(Lapse::getStartWeek)
         .thenComparing(Lapse::getStartDay)

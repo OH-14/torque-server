@@ -79,7 +79,7 @@ public class bracketsGenerator implements CompetitionSystem {
             for(int e = 0;e<lastRound.size();e=e+2){
                 Player winnerOne = getWinner(lastRound.get(e));
                 Player winnerTwo = getWinner(lastRound.get(e+1));
-                Match match = new Match(winnerOne, winnerTwo, category);
+                Match match = new Match(winnerOne, winnerTwo, category, i+1);
                 newRound.add(match);
                 this.matches.add(match);
             }
@@ -107,7 +107,7 @@ public class bracketsGenerator implements CompetitionSystem {
         List<Integer> indexes = generateOrder(numberOfPositions, numberOfRounds);
         indexes.replaceAll(n->n-1);
        for(int i = 0; i<players.size();i=i+2){
-        Match match = new Match(players.get(indexes.get(i)), players.get(indexes.get(i+1)), category); 
+        Match match = new Match(players.get(indexes.get(i)), players.get(indexes.get(i+1)), category, 1); 
         firstRound.add(match);
         this.matches.add(match);
        }
