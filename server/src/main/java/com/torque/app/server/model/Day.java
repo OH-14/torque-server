@@ -1,5 +1,4 @@
-package com.torque.app.server.util;
-
+package com.torque.app.server.model;
 public enum Day {
     MON, TUE, WED, THU, FRI, SAT, SUN;
     private static final Day[] DAYS = Day.values();
